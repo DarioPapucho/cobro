@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #ff6b35, #f7931e);
+    background: linear-gradient(135deg, #2E7D32, #4CAF50);
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -25,13 +25,20 @@ body {
 
 h1 {
     text-align: center;
-    color: #333;
-    margin-bottom: 30px;
+    color: #2E7D32;
+    margin-bottom: 10px;
     font-size: 2.2em;
-    font-weight: 300;
+    font-weight: 600;
 }
 
-.profile-form {
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 1.1em;
+}
+
+.payment-form {
     display: flex;
     flex-direction: column;
     gap: 25px;
@@ -45,12 +52,12 @@ h1 {
 
 label {
     font-weight: 600;
-    color: #555;
+    color: #2E7D32;
     font-size: 1.1em;
 }
 
-input[type="file"],
-input[type="number"] {
+input[type="text"],
+input[type="file"] {
     padding: 12px 15px;
     border: 2px solid #e1e1e1;
     border-radius: 8px;
@@ -58,94 +65,96 @@ input[type="number"] {
     transition: border-color 0.3s ease;
 }
 
-input[type="file"]:focus,
-input[type="number"]:focus {
+input[type="text"]:focus,
+input[type="file"]:focus {
     outline: none;
-    border-color: #ff6b35;
+    border-color: #4CAF50;
 }
 
-input[type="number"] {
+input[type="text"] {
     background: #f9f9f9;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    font-weight: 600;
 }
 
-.image-preview {
+.help-text {
+    font-size: 0.9em;
+    color: #666;
+    font-style: italic;
+}
+
+.qr-preview {
     margin-top: 10px;
     text-align: center;
 }
 
-.image-preview img {
-    max-width: 150px;
-    max-height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #ff6b35;
-    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+.qr-preview img {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 8px;
+    border: 3px solid #4CAF50;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+
+.location-status {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.status-icon {
+    font-size: 1.2em;
+}
+
+.status-text {
+    color: #666;
+}
+
+.status-indicator.success {
+    color: #2E7D32;
+}
+
+.status-indicator.error {
+    color: #d32f2f;
+}
+
+.status-indicator.loading {
+    color: #1976d2;
 }
 
 .location-btn {
     background: #4CAF50;
     color: white;
     border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
+    padding: 8px 16px;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
+    margin-top: 10px;
     transition: background-color 0.3s ease;
-    margin: 5px;
 }
 
 .location-btn:hover {
     background: #45a049;
 }
 
-.location-btn.precise {
-    background: #2196F3;
-}
-
-.location-btn.precise:hover {
-    background: #1976D2;
-}
-
-.location-btn.google {
-    background: #FF5722;
-}
-
-.location-btn.google:hover {
-    background: #E64A19;
-}
-
-.location-btn.confirm {
-    background: #9C27B0;
-}
-
-.location-btn.confirm:hover {
-    background: #7B1FA2;
-}
-
-.location-btn.center {
-    background: #FF9800;
-}
-
-.location-btn.center:hover {
-    background: #F57C00;
-}
-
-.location-btn.locate {
-    background: #E91E63;
-}
-
-.location-btn.locate:hover {
-    background: #C2185B;
-}
-
-.location-btn:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-}
 
 .submit-btn {
-    background: linear-gradient(135deg, #ff6b35, #f7931e);
+    background: linear-gradient(135deg, #2E7D32, #4CAF50);
     color: white;
     border: none;
     padding: 15px 30px;
@@ -157,17 +166,11 @@ input[type="number"] {
     margin-top: 10px;
 }
 
-.submit-btn:hover {
+.submit-btn:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+    box-shadow: 0 5px 15px rgba(46, 125, 50, 0.4);
 }
 
-.submit-btn:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
 
 .status {
     margin-top: 20px;
@@ -197,21 +200,6 @@ input[type="number"] {
     color: #0c5460;
     border: 1px solid #bee5eb;
     display: block;
-}
-
-.help-text {
-    background: #f8f9fa;
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    padding: 15px;
-    font-size: 14px;
-    line-height: 1.5;
-    color: #495057;
-    margin: 10px 0;
-}
-
-.help-text strong {
-    color: #ff6b35;
 }
 
 @media (max-width: 600px) {

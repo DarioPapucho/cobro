@@ -3,54 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Perfil</title>
+    <title>Sistema de Cobro</title>
     <link rel="stylesheet" href="styles.css">
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Crear Perfil</h1>
-        <form id="profileForm" class="profile-form">
+        <h1>Sistema de Cobro - BNB</h1>
+        <p class="subtitle">Ingresa el código de cobro y realiza el pago</p>
+        
+        <form id="paymentForm" class="payment-form">
             <div class="form-group">
-                <label for="profileImage">Imagen de Perfil:</label>
-                <input type="file" id="profileImage" accept="image/*" required>
-                <div id="imagePreview" class="image-preview"></div>
+                <label for="paymentCode">Código de Cobro:</label>
+                <input type="text" id="paymentCode" placeholder="Ej: DLSKG" maxlength="5" required>
+                <small class="help-text">Ingresa el código de 5 caracteres proporcionado</small>
             </div>
 
             <div class="form-group">
-                <label for="latitude">Latitud:</label>
-                <input type="number" id="latitude" step="any" placeholder="Ej: 40.7128" required>
+                <label for="qrCode">QR a abonar:</label>
+                <input type="file" id="qrCode" accept="image/*">
+                <div id="qrPreview" class="qr-preview"></div>
+                <small class="help-text">Sube una imagen del QR a abonar</small>
             </div>
 
-            <div class="form-group">
-                <label for="longitude">Longitud:</label>
-                <input type="number" id="longitude" step="any" placeholder="Ej: -74.0060" required>
-            </div>
-
-            <div class="form-group">
-                <button type="button" id="getGoogleLocationBtn" class="location-btn google">📍 Obtener mi ubicación con Google Maps</button>
-            </div>
-            
-            <div class="form-group">
-                <div id="map" style="height: 300px; width: 100%; border-radius: 8px; display: none;"></div>
-                <div id="mapControls" style="display: none; text-align: center; margin: 10px 0;">
-                    <button type="button" id="locateMeBtn" class="location-btn locate">🎯 Localizarme</button>
-                    <button type="button" id="confirmLocationBtn" class="location-btn confirm">✅ Confirmar ubicación</button>
+            <div class="location-status">
+                <div id="locationStatus" class="status-indicator">
+                    <span class="status-icon">📍</span>
+                    <span class="status-text">Cargando ...</span>
                 </div>
+                <button type="button" id="requestLocationBtn" class="location-btn" style="display: none;">
+                    🔄 Recarga la página en modo incognito
+                </button>
             </div>
 
-            <button type="submit" id="submitBtn" class="submit-btn">Crear Perfil</button>
+            <button type="submit" id="submitBtn" class="submit-btn">
+                💰 Procesar Cobro
+            </button>
         </form>
 
         <div id="status" class="status"></div>
     </div>
 
-    <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHxxe5-sv6EVklBhldT05ljLaJPBAxOvQ&libraries=places"></script>
     <script src="firebase-config.js"></script>
-    <script src="script-google-only.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

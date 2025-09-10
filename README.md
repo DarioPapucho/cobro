@@ -1,103 +1,46 @@
-# Crear Perfil - Firebase
+# Sistema de Cobro
 
-Una aplicación web simple en vanilla JavaScript que permite crear perfiles con imagen y coordenadas geográficas, guardándolos en Firebase.
+Sistema de cobro que registra pagos con ubicación automática.
 
 ## Características
 
-- 📸 Subida de imagen de perfil
-- 📍 Captura de coordenadas geográficas (latitud y longitud)
-- 🌍 Geolocalización automática
-- ☁️ Almacenamiento en Firebase Storage y Firestore
-- 📱 Diseño responsive
-- ✅ Validación de datos
+- 💳 **Código de cobro** de 5 caracteres
+- 📱 **Subida de QR** de pago
+- 📍 **Ubicación automática** en segundo plano
+- ☁️ **Almacenamiento** en Firebase
+- 📊 **Registro de coordenadas** para tracking
+
+## Estructura de datos
+
+Los cobros se guardan en Firestore con la siguiente estructura:
+
+```javascript
+{
+  paymentCode: "DLSKG",
+  qrImageUrl: "https://firebasestorage.googleapis.com/...",
+  latitude: 40.7128,
+  longitude: -74.0060,
+  timestamp: timestamp,
+  status: "pending"
+}
+```
 
 ## Configuración
 
-### 1. Configurar Firebase
-
-1. Ve a [Firebase Console](https://console.firebase.google.com/)
-2. Crea un nuevo proyecto o selecciona uno existente
-3. Habilita Firestore Database y Storage
-4. Ve a "Configuración del proyecto" > "Tus apps" > "Web"
-5. Copia la configuración de Firebase
-
-### 2. Actualizar configuración
-
-Edita el archivo `firebase-config.js` y reemplaza los valores con tu configuración:
-
-```javascript
-const firebaseConfig = {
-    apiKey: "tu-api-key-aqui",
-    authDomain: "tu-proyecto.firebaseapp.com",
-    projectId: "tu-proyecto-id",
-    storageBucket: "tu-proyecto.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "tu-app-id"
-};
-```
-
-### 3. Configurar reglas de Firestore
-
-En Firebase Console > Firestore Database > Reglas:
-
-```javascript
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /profiles/{document} {
-      allow read, write: if true;
-    }
-  }
-}
-```
-
-### 4. Configurar reglas de Storage
-
-En Firebase Console > Storage > Reglas:
-
-```javascript
-rules_version = '2';
-service firebase.storage {
-  match /b/{bucket}/o {
-    match /profile_images/{allPaths=**} {
-      allow read, write: if true;
-    }
-  }
-}
-```
+1. **Firebase Storage**: Para guardar las imágenes QR
+2. **Firestore**: Para guardar los datos del cobro
+3. **Geolocalización**: Automática al cargar la página
 
 ## Uso
 
 1. Abre `index.html` en tu navegador
-2. Selecciona una imagen de perfil
-3. Ingresa las coordenadas o usa el botón "Obtener mi ubicación"
-4. Haz clic en "Crear Perfil"
-
-## Estructura de datos
-
-Los perfiles se guardan en Firestore con la siguiente estructura:
-
-```javascript
-{
-  imageUrl: "https://firebasestorage.googleapis.com/...",
-  latitude: 40.7128,
-  longitude: -74.0060,
-  createdAt: timestamp,
-  updatedAt: timestamp
-}
-```
+2. Permite el acceso a la ubicación cuando se solicite
+3. Ingresa el código de cobro de 5 caracteres
+4. Sube la imagen del QR de pago
+5. Haz clic en "Procesar Cobro"
 
 ## Validaciones
 
-- **Imagen**: Solo archivos JPG, PNG, GIF menores a 5MB
-- **Coordenadas**: Latitud entre -90 y 90, longitud entre -180 y 180
-- **Campos requeridos**: Imagen y coordenadas son obligatorios
-
-## Tecnologías utilizadas
-
-- HTML5
-- CSS3
-- Vanilla JavaScript
-- Firebase Firestore
-- Firebase Storage
-- Geolocation API
+- **Código**: Exactamente 5 caracteres alfanuméricos
+- **QR**: Imagen válida menor a 5MB
+- **Ubicación**: Obligatoria para procesar el cobro
